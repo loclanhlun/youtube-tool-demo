@@ -1,6 +1,7 @@
 package com.hbloc.youtube_tool_demo.auth.application;
 
 import com.hbloc.youtube_tool_demo.common.security.JwtService;
+import com.hbloc.youtube_tool_demo.user.domain.Role;
 import com.hbloc.youtube_tool_demo.user.domain.User;
 import com.hbloc.youtube_tool_demo.user.infrastructure.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,8 @@ public class AuthService implements IAuthService{
 
         User user = new User();
         user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
+        user.setPasswordHash(passwordEncoder.encode(password));
+        user.setStatusId(1);
         userRepository.save(user);
 
         return jwtService.generate(email, List.of("ROLE_USER"));
@@ -36,11 +38,11 @@ public class AuthService implements IAuthService{
     public String login(String email, String password) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        if (user.getStatusId() == 2 || !passwordEncoder.matches(password, user.getPassword())) {
+        if (user.getStatusId() == 2 || !passwordEncoder.matches(password, user.getPasswordHash())) {
             throw new BadCredentialsException("Invalid credentials");
         }
 
-        var roles = user.getRoles().stream().map(r -> "ROLE_" + r.getCode()).toList();
+        var roles = user.getRoles().stream().map(Role::getCode).toList();
 
         return jwtService.generate(email, roles.isEmpty() ? List.of("ROLE_USER"): roles);
     }

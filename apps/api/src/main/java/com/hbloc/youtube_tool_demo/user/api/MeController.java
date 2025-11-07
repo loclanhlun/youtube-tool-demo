@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/me")
+@RequestMapping("/api/v1/")
 public class MeController {
 
-    @GetMapping
+    @GetMapping("/me")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public Map<String,String> profile(Authentication auth) {
         return Map.of("email", auth.getName());
