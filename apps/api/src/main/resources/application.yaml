@@ -60,7 +60,7 @@ spring:
     activate:
       on-profile: dev
   datasource:
-    url: "${DB_URL}"
+    url: "jdbc:postgresql://localhost:5433/youtube_tool"
 ---
 spring:
   config:
