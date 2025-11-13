@@ -117,7 +117,7 @@ CREATE INDEX IF NOT EXISTS idx_pricing_rules_feature_time
 -- Gói subscription: định nghĩa billing + giá + trạng thái
 CREATE TABLE IF NOT EXISTS plans
 (
-    id             BIGSERIAL PRIMARY KEY,
+    id             SERIAL PRIMARY KEY,
     code           VARCHAR(50) UNIQUE NOT NULL,
     name           VARCHAR(155)       NOT NULL,
     description    TEXT,
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS plans
 -- Khi vượt included_units -> dùng credit_wallet.
 CREATE TABLE IF NOT EXISTS plan_features
 (
-    id             BIGSERIAL PRIMARY KEY,
+    id             SERIAL PRIMARY KEY,
     plan_id        BIGINT      NOT NULL,
     feature_id     INT         NOT NULL,
     included_units BIGINT      NOT NULL DEFAULT 0,
@@ -188,7 +188,7 @@ CREATE INDEX IF NOT EXISTS idx_subscriptions_status ON subscriptions (status);
 -- Dùng để check nhanh limit thay vì scan jobs/tool_runs mỗi lần.
 CREATE TABLE IF NOT EXISTS subscription_feature_usage
 (
-    id              BIGSERIAL PRIMARY KEY,
+    id              SERIAL PRIMARY KEY,
     subscription_id UUID        NOT NULL,
     feature_id      INT         NOT NULL,
     period_start    TIMESTAMPTZ NOT NULL,

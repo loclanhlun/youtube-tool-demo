@@ -36,10 +36,11 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql:42.7.8")
     runtimeOnly("org.flywaydb:flyway-database-postgresql")
 
-    implementation("org.mapstruct:mapstruct:1.5.5.Final")
+    compileOnly("org.mapstruct:mapstruct:1.5.5.Final")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
+    annotationProcessor("org.projectlombok:lombok-mapstruct-binding:0.2.0")
     implementation("org.springframework.ai:spring-ai-starter-model-openai")
 
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
