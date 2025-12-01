@@ -14,6 +14,7 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI openAPI () {
         return new OpenAPI()
+                .openapi("3.0.1")
                 .info(new Info().title("Youtube Tool API").version("v1"))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(

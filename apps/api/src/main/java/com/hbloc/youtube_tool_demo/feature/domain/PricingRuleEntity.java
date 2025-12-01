@@ -3,6 +3,7 @@ package com.hbloc.youtube_tool_demo.feature.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import com.hbloc.youtube_tool_demo.feature.domain.FeatureEntity;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -11,7 +12,7 @@ import java.time.Instant;
 @Table(name = "pricing_rules")
 @Getter
 @Setter
-public class PricingRule {
+public class PricingRuleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -41,6 +42,6 @@ public class PricingRule {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "feature_id", nullable = false, updatable = false, insertable = false)
-    private Feature feature;
+    private FeatureEntity feature;
 
 }

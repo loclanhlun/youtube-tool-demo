@@ -1,7 +1,7 @@
 package com.hbloc.youtube_tool_demo.plan.domain;
 
 import com.hbloc.youtube_tool_demo.common.persistence.BaseEntity;
-import com.hbloc.youtube_tool_demo.feature.domain.Feature;
+import com.hbloc.youtube_tool_demo.feature.domain.FeatureEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +16,12 @@ import java.time.Instant;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class PlanFeature extends BaseEntity {
+public class PlanFeatureEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "plan_features_id_seq")
+    @SequenceGenerator(name = "plan_features_id_seq", sequenceName = "plan_features_id_seq", allocationSize = 1)
+    private Integer id;
 
     @Column(name = "plan_id", nullable = false)
     private Integer planId;
@@ -41,10 +46,10 @@ public class PlanFeature extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "feature_id", nullable = false, updatable = false, insertable = false)
-    private Feature feature;
+    private FeatureEntity feature;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "plan_id", nullable = false, updatable = false, insertable = false)
-    private Plan plan;
+    private PlanEntity plan;
 
 }

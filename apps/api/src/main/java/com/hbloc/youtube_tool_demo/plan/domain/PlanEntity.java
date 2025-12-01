@@ -7,12 +7,18 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
+import com.hbloc.youtube_tool_demo.plan.domain.PlanFeatureEntity;
 
 @Entity
 @Table(name = "plans")
 @Getter
 @Setter
-public class Plan extends BaseEntity {
+public class PlanEntity extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "plans_id_seq")
+    @SequenceGenerator(name = "plans_id_seq", sequenceName = "plans_id_seq", allocationSize = 1)
+    private Integer id;
 
     @Column(name = "code", nullable = false, unique = true)
     private String code;
@@ -27,15 +33,15 @@ public class Plan extends BaseEntity {
     private BigDecimal price;
 
     @Column(name = "currency", nullable = false)
-    private char currency;
+    private String currency;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "billing_period", nullable = false)
     private BillingPeriodEnum billingPeriod;
 
     @Column(name = "active", nullable = false)
-    private Boolean active;
+    private Boolean active = true;
 
     @OneToMany(mappedBy = "plan")
-    private List<PlanFeature> planFeatures;
+    private List<PlanFeatureEntity> planFeatures;
 }

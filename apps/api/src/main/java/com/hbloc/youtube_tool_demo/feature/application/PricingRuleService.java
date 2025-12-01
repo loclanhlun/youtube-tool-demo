@@ -1,7 +1,7 @@
 package com.hbloc.youtube_tool_demo.feature.application;
 
 import com.hbloc.youtube_tool_demo.feature.api.modal.PricingRuleDto;
-import com.hbloc.youtube_tool_demo.feature.domain.PricingRule;
+import com.hbloc.youtube_tool_demo.feature.domain.PricingRuleEntity;
 import com.hbloc.youtube_tool_demo.feature.infrastructure.PricingRuleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class PricingRuleService implements IPricingRuleService {
 
     @Override
     public PricingRuleDto getActivePricingRule(String featureCode) {
-        PricingRule pricingRule = pricingRuleRepository.findActiveByFeatureCode(featureCode)
+        PricingRuleEntity pricingRule = pricingRuleRepository.findActiveByFeatureCode(featureCode)
                 .orElseThrow(() -> new RuntimeException("No active price rule found for featureCode: " + featureCode));
 
         PricingRuleDto pricingRuleDto = new PricingRuleDto();
@@ -35,7 +35,7 @@ public class PricingRuleService implements IPricingRuleService {
     @Override
     @Transactional(readOnly = true)
     public BigDecimal calculateCost(String featureCode, Long usedUnit) {
-        PricingRule pricingRule = pricingRuleRepository.findActiveByFeatureCode(featureCode)
+        PricingRuleEntity pricingRule = pricingRuleRepository.findActiveByFeatureCode(featureCode)
                 .orElseThrow(() -> new RuntimeException("No active price rule found for featureCode: " + featureCode));
 
         int minStep = pricingRule.getMinStep();

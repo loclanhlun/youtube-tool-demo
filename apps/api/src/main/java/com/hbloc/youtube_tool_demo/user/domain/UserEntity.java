@@ -1,6 +1,6 @@
 package com.hbloc.youtube_tool_demo.user.domain;
 
-import com.hbloc.youtube_tool_demo.credit.domain.CreditWallet;
+import com.hbloc.youtube_tool_demo.credit.domain.CreditWalletEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +15,7 @@ import java.util.*;
 @Table(name = "users")
 @Getter
 @Setter
-public class User implements UserDetails {
+public class UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue
@@ -33,13 +33,13 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles = new HashSet<>();
+    private Set<RoleEntity> roles = new HashSet<>();
 
     @Column(name = "status_id", nullable = false)
     private Integer statusId;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private CreditWallet creditWallet;
+    private CreditWalletEntity creditWallet;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

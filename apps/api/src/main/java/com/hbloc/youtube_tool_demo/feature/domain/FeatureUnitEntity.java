@@ -6,12 +6,18 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import com.hbloc.youtube_tool_demo.feature.domain.FeatureEntity;
 
 @Entity
 @Table(name = "feature_units")
 @Getter
 @Setter
-public class FeatureUnit extends BaseEntity {
+public class FeatureUnitEntity extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "feature_units_id_seq", sequenceName = "feature_units_id_seq")
+    private Integer id;
 
     @Column(nullable = false, unique = true)
     private String code;
@@ -20,5 +26,5 @@ public class FeatureUnit extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "featureUnit")
-    private List<Feature> features;
+    private List<FeatureEntity> features;
 }

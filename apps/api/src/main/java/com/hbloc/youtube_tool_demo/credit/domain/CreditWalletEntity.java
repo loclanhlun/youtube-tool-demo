@@ -1,6 +1,6 @@
 package com.hbloc.youtube_tool_demo.credit.domain;
 
-import com.hbloc.youtube_tool_demo.user.domain.User;
+import com.hbloc.youtube_tool_demo.user.domain.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
-public class CreditWallet {
+public class CreditWalletEntity {
 
     @Id
     @Column(name = "user_id")
@@ -43,7 +43,7 @@ public class CreditWallet {
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    private UserEntity user;
 
 
 }

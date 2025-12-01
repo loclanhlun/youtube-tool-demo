@@ -11,6 +11,10 @@ import java.util.List;
 public class Plan {
 
     @JsonIgnore
+    @JsonProperty("id")
+    private Integer id;
+
+    @JsonIgnore
     @JsonProperty("code")
     private String code;
 
