@@ -16,7 +16,7 @@ public class PricingRuleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "pricing_rules_id_seq", sequenceName = "pricing_rules_id_seq")
+    @SequenceGenerator(name = "pricing_rules_id_seq", sequenceName = "pricing_rules_id_seq", allocationSize = 1)
     private Integer id;
 
     @Column(name = "feature_id", nullable = false)

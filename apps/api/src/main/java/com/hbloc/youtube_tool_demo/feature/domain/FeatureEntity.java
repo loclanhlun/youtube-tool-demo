@@ -3,6 +3,7 @@ package com.hbloc.youtube_tool_demo.feature.domain;
 import com.hbloc.youtube_tool_demo.common.persistence.BaseEntity;
 import com.hbloc.youtube_tool_demo.plan.domain.PlanFeatureEntity;
 import com.hbloc.youtube_tool_demo.feature.domain.FeatureUnitEntity;
+import com.hbloc.youtube_tool_demo.subscription.domain.SubscriptionFeatureUsage;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,4 +39,7 @@ public class FeatureEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "feature")
     private List<PlanFeatureEntity> planFeatures;
+
+    @OneToMany(mappedBy = "feature")
+    private List<SubscriptionFeatureUsage> subscriptionFeatureUsages;
 }

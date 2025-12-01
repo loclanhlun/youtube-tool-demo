@@ -1,6 +1,7 @@
 package com.hbloc.youtube_tool_demo.user.domain;
 
 import com.hbloc.youtube_tool_demo.credit.domain.CreditWalletEntity;
+import com.hbloc.youtube_tool_demo.subscription.domain.Subscription;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,6 +41,9 @@ public class UserEntity implements UserDetails {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private CreditWalletEntity creditWallet;
+
+    @OneToMany(mappedBy = "users")
+    private List<Subscription> subscriptions;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
