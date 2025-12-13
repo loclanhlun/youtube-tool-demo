@@ -1,6 +1,9 @@
 package com.hbloc.youtube_tool_demo.auth.application;
 
 import com.hbloc.youtube_tool_demo.common.security.JwtService;
+import com.hbloc.youtube_tool_demo.subscription.api.modal.CreateSubscriptionRequest;
+import com.hbloc.youtube_tool_demo.subscription.application.ISubscriptionService;
+import com.hbloc.youtube_tool_demo.subscription.domain.SubscriptionStatusEnum;
 import com.hbloc.youtube_tool_demo.user.domain.RoleEntity;
 import com.hbloc.youtube_tool_demo.user.domain.UserEntity;
 import com.hbloc.youtube_tool_demo.user.infrastructure.RoleRepository;
@@ -12,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -23,6 +25,7 @@ public class AuthService implements IAuthService{
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final ISubscriptionService subscriptionService;
 
 
     @Override
@@ -35,9 +38,15 @@ public class AuthService implements IAuthService{
         user.setStatusId(1);
         RoleEntity role =  roleRepository.findByCode("ROLE_USER").orElseThrow(() -> new RuntimeException("Role is not exist"));
         user.setRoles(Set.of(role));
-        userRepository.save(user);
+        UserEntity savedUser = userRepository.save(user);
 
+        CreateSubscriptionRequest subscriptionRequest = new CreateSubscriptionRequest();
+        subscriptionRequest.setUserId(savedUser.getId());
+        subscriptionRequest.setStatus(SubscriptionStatusEnum.TRIALING.getValue());
+        subscriptionRequest.setAutoRenew(true);
+        subscriptionRequest.setPlanCode("FREE");
 
+        subscriptionService.activateSubscription(subscriptionRequest);
 
         return jwtService.generate(email, List.of("ROLE_USER"));
     }

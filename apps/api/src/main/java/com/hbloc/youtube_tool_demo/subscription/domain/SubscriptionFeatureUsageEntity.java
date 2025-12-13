@@ -13,7 +13,7 @@ import java.util.UUID;
 @Table(name = "subscription_feature_usage")
 @Getter
 @Setter
-public class SubscriptionFeatureUsage extends BaseEntity {
+public class SubscriptionFeatureUsageEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "subscription_feature_usage_id_seq")
@@ -41,5 +41,5 @@ public class SubscriptionFeatureUsage extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subscription_id", nullable = false, updatable = false, insertable = false)
-    private Subscription subscription;
+    private SubscriptionEntity subscription;
 }

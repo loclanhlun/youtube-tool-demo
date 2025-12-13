@@ -1,14 +1,13 @@
 package com.hbloc.youtube_tool_demo.plan.domain;
 
 import com.hbloc.youtube_tool_demo.common.persistence.BaseEntity;
-import com.hbloc.youtube_tool_demo.subscription.domain.Subscription;
+import com.hbloc.youtube_tool_demo.subscription.domain.SubscriptionEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
-import com.hbloc.youtube_tool_demo.plan.domain.PlanFeatureEntity;
 
 @Entity
 @Table(name = "plans")
@@ -46,6 +45,6 @@ public class PlanEntity extends BaseEntity {
     @OneToMany(mappedBy = "plan")
     private List<PlanFeatureEntity> planFeatures;
 
-    @OneToOne(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Subscription subscription;
+    @OneToMany(mappedBy = "plan")
+    private List<SubscriptionEntity> subscriptions;
 }

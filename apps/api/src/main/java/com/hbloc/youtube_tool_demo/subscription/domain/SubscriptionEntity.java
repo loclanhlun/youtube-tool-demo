@@ -16,7 +16,7 @@ import java.util.UUID;
 @Table(name = "subscriptions")
 @Getter
 @Setter
-public class Subscription extends BaseEntity {
+public class SubscriptionEntity extends BaseEntity {
 
     @Id
     @GeneratedValue
@@ -27,10 +27,11 @@ public class Subscription extends BaseEntity {
     private UUID userId;
 
     @Column(name = "plan_id", nullable = false)
-    private Long planId;
+    private Integer planId;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private String status;
+    private SubscriptionStatusEnum status;
 
     @Column(name = "auto_renew", nullable = false)
     private boolean isAutoRenew;
@@ -48,15 +49,14 @@ public class Subscription extends BaseEntity {
     private String cancelReason;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, updatable = false, insertable = false)
-    private UserEntity users;
+    @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
+    private UserEntity user;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "plan_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "plan_id", nullable = false, insertable = false, updatable = false)
     private PlanEntity plan;
 
     @OneToMany(mappedBy = "subscription")
-    private List<SubscriptionFeatureUsage> subscriptionFeatureUsages;
+    private List<SubscriptionFeatureUsageEntity> subscriptionFeatureUsageEntities;
 
 }
